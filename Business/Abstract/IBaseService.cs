@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface IBaseManager<S>
+    public interface IBaseService<S>
     {
         void Add(S s);
         void Update(S s);

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface ICarService:IBaseManager<Car>
+    public interface ICarService:IBaseService<Car>
     {
         
         
