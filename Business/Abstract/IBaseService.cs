@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,10 +7,10 @@ namespace Business.Abstract
 {
     public interface IBaseService<S>
     {
-        void Add(S s);
-        void Update(S s);
-        void Delete(S s);
-        List<S> GetAll();
+        IResult Add(S s);
+        IResult Update(S s);
+        IResult Delete(S s);
+        
 
     }
 }
