@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities;
+using Core.Utilities.Business;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -10,7 +13,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager :ICarService
+    public class CarManager : ICarService
     {
         ICarDal _carDal;
         public CarManager(ICarDal carDal)
@@ -18,17 +21,16 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.DailyPrice>0 && car.Description.Length>=2)
+            IResult result = BusinessRules.Run(CheckIfCarCountOfBrandCorrect(car.BrandId));
+            if (result != null)
             {
-                _carDal.Add(car);
-                return new SuccessResult(Messages.CarAdded);
+                return result;
             }
-            else
-            {
-                return new ErrorResult(Messages.CarNameInvalid);
-            }
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
@@ -49,7 +51,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.DailyPrice>=min && c.DailyPrice<=max));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -59,12 +61,12 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId == id));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.ColorId == id));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
         }
 
         public IResult Update(Car car)
@@ -79,6 +81,14 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CarNameInvalid);
             }
         }
-
+        private IResult CheckIfCarCountOfBrandCorrect(int brandId)
+        {
+            var result = _carDal.GetAll(c => c.BrandId == brandId).Count;
+            if (result>=2)
+            {
+                return new ErrorResult(Messages.CarCountOfBrandError);
+            }
+            return new SuccessResult();
+        }
     }
 }
