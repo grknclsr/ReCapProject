@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entites.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,9 +30,12 @@ namespace Business.Constants
         public static string RentalUpdated = "Kiralama başarı ile güncellendi.";
         public static string RentalError = "Kiralama işlemi başarısız.";
         //User Messages
-        public static string UserAdded = "Kullanıcı başarı ile eklendi";
-        public static string UserDeleted = "Kullanıcı başarı ile silindi.";
-        public static string UserUpdated = "Kullanıcı başarı ile güncellendi.";
+        public static string UserRegistered = "Kayıt başarılı.";
+        public static string UserNotFound = "Kullanıcı bulunamadı.";
+        public static string PasswordError = "Şifre hatalı";
+        public static string SuccessfulLogin = "Giriş başarılı.";
+        public static string UserAlreadyExists = "Bu kayıt daha önce oluşturulmuş.";
+        public static string AccessTokenCreated = "Token oluşturuldu";
         //Customer Messages
         public static string CustomerAdded = "Müşteri başarı ile eklendi";
         public static string CustomerDeleted = "Müşteri başarı ile silindi.";
@@ -43,5 +47,7 @@ namespace Business.Constants
         public static string ErrorImageLimit = "Bir arabanın 5'den fazla resmi olamaz!";
 
         public static string CarCountOfBrandError = "10'dan fazla kategori yazılamaz!";
+
+        
     }
 }
