@@ -1,6 +1,7 @@
 ﻿using Core.Entites.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -48,6 +49,6 @@ namespace Business.Constants
 
         public static string CarCountOfBrandError = "10'dan fazla kategori yazılamaz!";
 
-        
+        public static string AuthorizationDenied = "Yetkiniz yok.";
     }
 }
