@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -23,6 +24,7 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
+            Thread.Sleep(5000);
             var result = _rentalService.GetAll();
             if (result.Success)
             {
@@ -64,25 +66,26 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getrentaldetails")]
-        public IActionResult GetRentalDetails(int id)
+        public IActionResult GetRentalDetails()
         {
-            var result = _rentalService.GetRentalDetails(id);
+            Thread.Sleep(5000);
+            var result = _rentalService.GetRentalDetails();
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
-        [HttpGet("checkreturndate")]
-        public IActionResult CheckReturnDate(int carId)
-        {
-            var result = _rentalService.CheckReturnDate(carId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+        //[HttpGet("checkreturndate")]
+        //public IActionResult CheckReturnDate(int carId)
+        //{
+        //    var result = _rentalService.CheckReturnDate(carId);
+        //    if (result.Success)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return BadRequest(result);
+        //}
 
     }
 }

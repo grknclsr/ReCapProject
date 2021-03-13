@@ -27,24 +27,24 @@ namespace Business.Concrete
         [SecuredOperation("car.add,admin")]
         public IResult Add(Rental rental)
         {
-            var result = CheckReturnDate(rental.CarId);
-            if (!result.Success)
-            {
-                return new ErrorResult(Messages.RentalError);
-            }
+            //var result = CheckReturnDate(rental.CarId);
+            //if (!result.Success)
+            //{
+            //    return new ErrorResult(Messages.RentalError);
+            //}
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
 
-        public IResult CheckReturnDate(int carId)
-        {
-            var result = _rentalDal.GetRentalDetails(r => r.CarId == carId && r.ReturnDate == null);
-            if (result.Count>0)
-            {
-                return new ErrorResult(Messages.RentalError);
-            }
-            return new SuccessResult(Messages.RentalAdded);
-        }
+        //public IResult CheckReturnDate(int carId)
+        //{
+        //    var result = _rentalDal.GetRentalDetails(r => r.CarId == carId && r.ReturnDate == null);
+        //    if (result.Count>0)
+        //    {
+        //        return new ErrorResult(Messages.RentalError);
+        //    }
+        //    return new SuccessResult(Messages.RentalAdded);
+        //}
 
         [SecuredOperation("car.add,admin")]
         public IResult Delete(Rental rental)
@@ -58,9 +58,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetails(int carId)
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(r => r.CarId == carId));
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
 
         [ValidationAspect(typeof(RentalValidator))]
